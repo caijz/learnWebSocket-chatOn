@@ -14,5 +14,5 @@ app.get('/', function (req, res) {
 chat.initialize(http);
 
 http.listen(2501, function () {
-    console.log('listening on: 2501');
+    console.log('listening on: 2501 waiting...');
 });

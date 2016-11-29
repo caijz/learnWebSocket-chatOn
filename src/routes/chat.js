@@ -88,3 +88,4 @@ chat.changeName = function (socket) {
     })
 };
 
+module.exports = chat;
