@@ -6,7 +6,7 @@ var chat = {};
 
 chat.io = false;
 chat.userName = {};
-chat.usedName = {};
+chat.usedName = [];
 chat.userNum = 0;
 chat.currentRoom = {};
 
@@ -87,5 +87,26 @@ chat.changeName = function (socket) {
         }
     })
 };
+
+chat.disconnect = function(socket) {
+
+    var self = this;
+
+    socket.on('disconnect', function(){
+        var msg = self.userName[socket.id] + ' just left';
+
+        self.io.emit('exit user', msg);
+
+        var nameIndex = self.usedName.indexOf(self.userName[socket.id]);
+
+        delete self.userName[socket.id];
+        delete self.usedName[nameIndex];
+
+        socket.leave(self.currentRoom[socket.id]);
+
+        delete self.currentRoom[socket.id];
+    });
+
+}
 
 module.exports = chat;
